@@ -59,38 +59,30 @@ function useGapi(opts) {
     document.body.appendChild(script);
   }, [gapi]);
 
-  // useEffect(() => {
-  //   !gapi ? setIsLoading(true) : setIsLoading(false);
-  // }, [isLoading, gapi]);
+  const handleSignIn = async () => {
+    try {
+      await gapi.auth2.getAuthInstance().signIn();
+    } catch (error) {
+      console.log(error);
+      throw new Error('Google API not loaded', error);
+    }
+  };
 
-  const onSignOut = useCallback(() => {
-    (async () => {
-      try {
-        await gapi.auth2.getAuthInstance().signOut();
-      } catch (error) {
-        console.log(error);
-        throw new Error('Google API not loaded', error);
-      }
-    })();
-  }, [gapi]);
-
-  const onSignIn = useCallback(() => {
-    (async () => {
-      try {
-        await gapi.auth2.getAuthInstance().signIn();
-      } catch (error) {
-        console.log(error);
-        throw new Error('Google API not loaded', error);
-      }
-    })();
-  }, [gapi]);
+  const handleSignOut = async () => {
+    try {
+      await gapi.auth2.getAuthInstance().signOut();
+    } catch (error) {
+      console.log(error);
+      throw new Error('Google API not loaded', error);
+    }
+  };
 
   return {
     isLoading,
     currentUser,
     isAuthenticated,
-    onSignIn,
-    onSignOut
+    handleSignIn,
+    handleSignOut
   };
 }
 
