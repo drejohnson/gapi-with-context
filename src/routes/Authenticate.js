@@ -1,8 +1,11 @@
 import React from 'react';
-import { useLocation, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import { useAuth } from '../contexts/auth';
 
 const Authenticate = () => {
-  return <Redirect to="/events" />;
+  const { googleApi } = useAuth();
+  const { currentUser } = googleApi;
+  return <Redirect to={`/${currentUser.googleId}/dashboard`} />;
 };
 
 export default Authenticate;
