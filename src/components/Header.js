@@ -7,7 +7,7 @@ import logo from '../logo.svg';
 
 const Header = () => {
   const { googleApi } = useAuth();
-  const { isAuthenticated, handleSignOut, currentUser } = googleApi;
+  const { isAuthenticated, currentUser } = googleApi;
 
   return (
     <Flex
@@ -24,12 +24,14 @@ const Header = () => {
       </Box>
       {isAuthenticated ? (
         <Box>
-          <Image
-            rounded="full"
-            size="40px"
-            src={currentUser.photoUrl}
-            alt="avatar"
-          />
+          <StyledLink as={Link} to={`/${currentUser.googleId}/dashboard`}>
+            <Image
+              rounded="full"
+              size="40px"
+              src={currentUser.photoUrl}
+              alt="avatar"
+            />
+          </StyledLink>
         </Box>
       ) : (
         <StyledLink as={Link} to="/">
