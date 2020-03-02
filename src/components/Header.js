@@ -19,7 +19,7 @@ const Header = () => {
       p={5}
       boxShadow="0 6px 15px 0 rgba(0,0,0,0.07);"
     >
-      <Box className="logo-container" width="50px">
+      <Box className="logo-container" width="200px">
         <Image src={logo} alt="logo" />
       </Box>
       {isAuthenticated ? (
