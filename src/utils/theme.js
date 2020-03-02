@@ -15,7 +15,13 @@ const theme = {
   colors: {
     transparent: 'transparent',
     ...chakraTheme.colors,
-    black: '#16161D'
+    black: '#16161D',
+    brand: {
+      yellow: '#F0EB70',
+      blue_primary: '#6CA1C1',
+      blue_accent: '#7690B9',
+      lightgray: '#ebf1f1'
+    }
   },
   fonts,
   breakpoints,
@@ -66,6 +72,10 @@ const theme = {
       viewBox: '0 0 120 120'
     },
     circle: {
+      path: <circle cx="12" cy="12" r="10"></circle>,
+      viewBox: '0 0 24 24'
+    },
+    open_circle: {
       path: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -80,8 +90,7 @@ const theme = {
         >
           <circle cx="12" cy="12" r="10"></circle>
         </svg>
-      ),
-      viewBox: '0 0 24 24'
+      )
     },
     prev: {
       path: (
