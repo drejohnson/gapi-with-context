@@ -21,7 +21,7 @@ export const DisabledDays = ({ days }) => {
   );
 };
 
-const Days = ({ events, date }) => {
+const Days = ({ events, date, selected, setSelected, templateFormOpen }) => {
   const {
     daysInMonth,
     currentDay,
@@ -43,6 +43,27 @@ const Days = ({ events, date }) => {
           currentMonth === currentDay.month() &&
           currentYear === currentDay.year();
 
+        const isPicked = selected.includes(
+          `${currentYear}-${currentMonth + 1 < 10 ? 0 : ''}${currentMonth +
+            1}-${day < 10 ? 0 : ''}${day}`
+        );
+
+        const handleSelected = () => {
+          //dateTime: "2020-02-28T08:30:00-08:00"
+
+          //concatinated to w/ turnary to put into correct format
+          const newdate = date
+            .format('YYYY-MM')
+            .concat(`-${day < 10 ? 0 : ''}${day}`);
+
+          templateFormOpen
+            ? selected.includes(newdate)
+              ? setSelected(selected.filter(date => date !== newdate))
+              : setSelected(selected.concat(newdate))
+            : alert('pick a template');
+          console.log(selected);
+        };
+
         return (
           <Cell
             className="calendar-days-item"
@@ -56,6 +77,9 @@ const Days = ({ events, date }) => {
               justify="space-between"
               h="100%"
               py={[1, 8]}
+              backgroundColor={isPicked ? 'brand.blue_primary' : 'inherit'}
+              color={isPicked ? 'white' : 'inherit'}
+              onClick={handleSelected}
             >
               <Box
                 as="span"
