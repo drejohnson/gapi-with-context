@@ -5,7 +5,7 @@ import Days from './Days';
 import Cell from './Cell';
 import useDate from '../hooks/useDate';
 
-const Calendar = ({ api }) => {
+const Calendar = ({ api, selected, setSelected, templateFormOpen }) => {
   const currentDay = dayjs();
 
   // state to display cuurent date
@@ -92,6 +92,9 @@ const Calendar = ({ api }) => {
         <Days
           events={events}
           date={date}
+          templateFormOpen={templateFormOpen}
+          selected={selected}
+          setSelected={setSelected}
           weekDayOfFirstDay={weekDayOfFirstDoM}
           weekDayOfLastDay={weekDayOfLastDoM}
           daysInMonth={daysInMonth}
