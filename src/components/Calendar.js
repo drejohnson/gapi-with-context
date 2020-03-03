@@ -1,36 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
-import {
-  Heading,
-  Flex,
-  Grid,
-  Text,
-  Box,
-  Icon,
-  IconButton
-} from '@chakra-ui/core';
+import { Heading, Flex, Grid, Box, IconButton } from '@chakra-ui/core';
 import Days from './Days';
 import Cell from './Cell';
+import useDate from '../hooks/useDate';
 
 const Calendar = ({ api }) => {
   const currentDay = dayjs();
+
+  // state to display cuurent date
   const [date, setDate] = useState(dayjs());
 
+  // state to show users events
   const [events, setEvents] = useState(null);
 
-  const currentYear = date.year();
-  const currentMonth = date.month(); // January = 0
-  const daysInMonth = date.daysInMonth();
-
-  const firstDayOfMonth = dayjs(`${currentYear}-${currentMonth + 1}-1`);
-  const weekDayOfFirstDay = firstDayOfMonth.day(); // Sunday = 0
-
-  const lastDayOfMonth = dayjs(
-    `${currentYear}-${currentMonth + 1}-${daysInMonth}`
-  );
-  const weekDayOfLastDay = lastDayOfMonth.day();
-
-  const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const {
+    // currentDay,
+    // date,
+    // setDate,
+    currentMonth,
+    currentYear,
+    daysInMonth,
+    weekDayOfFirstDoM,
+    weekDayOfLastDoM,
+    weekDays
+  } = useDate(date);
 
   const handlePrev = () => {
     setDate(date.subtract(1, 'month'));
@@ -40,6 +34,7 @@ const Calendar = ({ api }) => {
     setDate(date.add(1, 'month'));
   };
 
+  // get events from api and set to state
   useEffect(() => {
     (async () => {
       try {
@@ -96,8 +91,9 @@ const Calendar = ({ api }) => {
       >
         <Days
           events={events}
-          weekDayOfFirstDay={weekDayOfFirstDay}
-          weekDayOfLastDay={weekDayOfLastDay}
+          date={date}
+          weekDayOfFirstDay={weekDayOfFirstDoM}
+          weekDayOfLastDay={weekDayOfLastDoM}
           daysInMonth={daysInMonth}
           currentDay={currentDay}
           currentMonth={currentMonth}
