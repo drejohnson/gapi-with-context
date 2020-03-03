@@ -2,6 +2,7 @@ import React from 'react';
 import { Flex, Box } from '@chakra-ui/core';
 import Cell from './Cell';
 import EventsIndicator from './EventsIndicator';
+import useDate from '../hooks/useDate';
 
 export const DisabledDays = ({ days }) => {
   return (
@@ -20,18 +21,18 @@ export const DisabledDays = ({ days }) => {
   );
 };
 
-const Days = ({
-  events,
-  weekDayOfFirstDay,
-  weekDayOfLastDay,
-  daysInMonth,
-  currentDay,
-  currentMonth,
-  currentYear
-}) => {
+const Days = ({ events, date }) => {
+  const {
+    daysInMonth,
+    currentDay,
+    currentMonth,
+    currentYear,
+    weekDayOfFirstDoM,
+    weekDayOfLastDoM
+  } = useDate(date);
   return (
     <>
-      <DisabledDays days={weekDayOfFirstDay} />
+      <DisabledDays days={weekDayOfFirstDoM} />
       {[...Array(daysInMonth).keys()].map(i => {
         // day is determined by items index + 1
         const day = i + 1;
@@ -79,7 +80,7 @@ const Days = ({
           </Cell>
         );
       })}
-      <DisabledDays days={6 - weekDayOfLastDay} />
+      <DisabledDays days={6 - weekDayOfLastDoM} />
     </>
   );
 };
