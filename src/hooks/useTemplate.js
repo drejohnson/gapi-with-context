@@ -45,7 +45,6 @@ const reducer = (state = initialState, action) => {
 
 const useTemplate = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [selected, setSelected] = useState([]);
 
   const getTemplateList = async ({ googleId }) => {
     try {
@@ -116,9 +115,7 @@ const useTemplate = () => {
     templateList: state.templateList,
     getTemplateList,
     addTemplate,
-    deleteTemplate,
-    selected,
-    setSelected
+    deleteTemplate
   };
 };
 
