@@ -16,7 +16,8 @@ const Header = () => {
       justify="space-between"
       align="center"
       backgroundColor="white"
-      p={5}
+      py={5}
+      px={[4, 16]}
       boxShadow="0 6px 15px 0 rgba(0,0,0,0.07);"
     >
       <Box className="logo-container" width="200px">
