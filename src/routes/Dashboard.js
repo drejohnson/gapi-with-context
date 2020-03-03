@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Flex, Box, Grid, Heading, Image, Button } from '@chakra-ui/core';
+import {
+  Flex,
+  Box,
+  Grid,
+  Heading,
+  Image,
+  Button,
+  Input
+} from '@chakra-ui/core';
 import { useAuth } from '../contexts/auth';
 import Calendar from '../components/Calendar';
 import useTemplate from '../hooks/useTemplate';
@@ -21,7 +29,7 @@ const Dashboard = () => {
   const { currentUser, handleSignOut } = googleApi;
 
   // Submit for template form
-  const onSubmit = formData => addTemplate(formData);
+  const onSubmit = formData => addTemplate(formData, currentUser);
 
   useEffect(() => {
     getTemplateList(currentUser);
@@ -48,7 +56,7 @@ const Dashboard = () => {
     >
       <Grid
         width="100%"
-        gap={2}
+        gap={4}
         templateColumns={['1fr', '250px 1fr']}
         gridTemplateAreas={["'sidebar' 'main'", "'sidebar main'"]}
       >
@@ -65,7 +73,7 @@ const Dashboard = () => {
             justify="center"
             w="100%"
             p={8}
-            my={2}
+            mb={4}
             backgroundColor="white"
             borderRadius="10px"
           >
@@ -90,7 +98,7 @@ const Dashboard = () => {
             justify="center"
             w="100%"
             p={8}
-            my={2}
+            mb={4}
             backgroundColor="white"
             borderRadius="10px"
           >
@@ -103,6 +111,7 @@ const Dashboard = () => {
                 endtime={t.endtime}
                 summary={t.summary}
                 description={t.description}
+                selected={selected}
                 templateFormOpen={templateFormOpen}
                 setTemplateFormOpen={setTemplateFormOpen}
                 applyTemplate={applyTemplate}
@@ -115,10 +124,46 @@ const Dashboard = () => {
             >
               Create Template
             </Button>
+            {formOpen && (
+              <div className="Form">
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <Input
+                    type="text"
+                    placeholder="summary"
+                    name="summary"
+                    ref={register({ maxLength: 80 })}
+                  />
+                  <Input
+                    type="text"
+                    placeholder="description"
+                    name="description"
+                    ref={register({ maxLength: 100 })}
+                  />
+                  <Input
+                    type="time"
+                    name="starttime"
+                    ref={register({ required: true })}
+                  />
+                  <Input
+                    type="time"
+                    name="endtime"
+                    ref={register({ required: true })}
+                  />
+
+                  <Button type="submit">Submit</Button>
+                </form>
+              </div>
+            )}
           </Flex>
         </Flex>
         <Box className="calendarArea" gridArea="main">
-          <Calendar api={api} />
+          <Calendar
+            api={api}
+            selected={selected}
+            setSelected={setSelected}
+            templateFormOpen={templateFormOpen}
+            setTemplateFormOpen={setTemplateFormOpen}
+          />
         </Box>
       </Grid>
     </Box>
