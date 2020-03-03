@@ -1,5 +1,11 @@
 import React, { useEffect } from 'react';
-import { Flex, Button, Heading, IconButton } from '@chakra-ui/core';
+import {
+  Flex,
+  ButtonGroup,
+  Button,
+  Heading,
+  IconButton
+} from '@chakra-ui/core';
 import useTemplate from '../hooks/useTemplate';
 
 const Template = ({
@@ -8,11 +14,12 @@ const Template = ({
   endtime,
   summary,
   description,
+  selected,
   templateFormOpen,
   setTemplateFormOpen,
   applyTemplate
 }) => {
-  const { selected, deleteTemplate } = useTemplate();
+  const { deleteTemplate } = useTemplate();
 
   const openTemplate = () => {
     setTemplateFormOpen(!templateFormOpen);
@@ -27,16 +34,18 @@ const Template = ({
         {starttime}-{endtime}
       </Heading>
       <Flex>
-        <Button variantColor="blue" onClick={() => openTemplate()}>
-          Choose Dates
-        </Button>
-        <IconButton
-          variantColor="red"
-          aria-label="Delete"
-          size="md"
-          icon="close"
-          onClick={() => deleteTemplate(id)}
-        />
+        <ButtonGroup spacing={4}>
+          <Button size="sm" variantColor="blue" onClick={() => openTemplate()}>
+            Choose Dates
+          </Button>
+          <IconButton
+            variantColor="red"
+            aria-label="Delete"
+            size="sm"
+            icon="close"
+            onClick={() => deleteTemplate(id)}
+          />
+        </ButtonGroup>
       </Flex>
 
       {templateFormOpen && (
